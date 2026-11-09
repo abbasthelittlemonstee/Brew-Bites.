@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brew &amp; Bites | Coffee &amp; Pastries</title>
+    <link rel="stylesheet" href="Brew&Bites.css">
+</head>
+
+<body>
+    
+    <!-- Navigation Bar -->
+     <header>
+        <nav class="navbar">
+            <a class="logo" href="#home" aria-label="Brew &amp; Bites home">
+                <img src="Brew&Bites Logo.png" alt="Brew &amp; Bites">
+            </a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#menu">Our Menu</a></li>
+                <li><a href="#order">Order Builder</a></li>
+                <li><a href="#contact">Contact Us</a></li>
+            </ul>
+
+        <a href="#menu" class="nav-button">Order Now</a>
+        </nav>
+     </header>
+
+     <!-- Hero Section -->
+      <section class="hero" id="home">
+        <div class="hero-content">
+            <p class="subtitle"> YOUR DAILY DOSE OF COMFORT</p>
+            <h2>Good Coffee. <br> Great Bites. <br> Better Days.</h2>
+            <p class="hero-text"> Freshly brewed coffee and delicious pastries
+                made to brighten your day.</p>
+                <a href="#menu" class="main-button">Explore Our Menu</a>
+        </div>
+        <div class="hero-image">
+            <img src="https://i.pinimg.com/736x/48/18/15/48181556a1251f85918fa22b7e24f1dc.jpg"
+             alt="Freshly brewed coffee">
+        </div>
+      </section>
+      
+      <!-- About Section-->
+       <section class="about" id="about">
+        <div class="about-image">
+            <img src="https://i.pinimg.com/1200x/36/cc/47/36cc47ac94c174bf7841adbf5178aaad.jpg"
+             alt="Freshly baked pastries">
+            </div>
+        <div class="about-content">
+            <p class="substitute"><ins>A Little About Us</ins></p>
+            <p>At Brew & Bites, we believe that a great day starts with a great cup of coffee 
+                and a delicious pastry. Our mission is to provide our customers with the 
+                perfect blend of comfort and quality in every sip and bite.</p>
+        <p>We're all about good food, good drinks and good moments.</p>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+     <section class="menu" id="menu">
+        <div class="section-heading">
+            <p class="subtitle">MADE WITH LOVE</p>
+            <h2>Explore Our Menu</h2>
+            <p>A little something for every craving.</p>
+            </div>
+            <div class="menu-container">
+                <div class="menu-card">
+                    <img src="https://i.pinimg.com/1200x/37/14/6b/37146b39b36eb6099cf2e874a7b038fd.jpg"
+                     alt="Coffee">
+                
+                <h3>Freshly Brewed Coffee</h3>
+            <p>Rich, smooth and freshly prepared.</p>
+        <span>&#8358;2000</span>
+        </div>
+        <div class="menu-card">
+            <img src="https://i.pinimg.com/736x/ae/e1/06/aee106ad4c05908aec29d36eb1d258b9.jpg"
+             alt="Doughnut">
+            <h3>Delicious Doughnuts</h3>
+            <p>Soft, fluffy and coated with sugar.</p>
+            <span>&#8358;400</span>
+        </div>
+        <div class="menu-card">
+            <img src="https://i.pinimg.com/736x/8e/73/9d/8e739d3c73267d97b1885a429aee0c79.jpg"
+            alt="Pancakes">
+            <h3>Pancakes with Syrups</h3>
+            <p>Sweet, soft and flavourful.</p>
+            <span>&#8358;350</span>
+        </div>
+        <div class="menu-card">
+            <img src="https://i.pinimg.com/1200x/b7/78/c4/b778c4406c32c55154d35bc5a3b492a5.jpg"
+            alt="Puff-Puff">
+            <h3>Puff-Puff</h3>
+            <p>Creamy and Different from anything you've tried</p>
+            <span>&#8358;150</span>
+        </div>
+        </div>
+    </section>
+
+    <!-- Packages and Order Builder -->
+    <section class="order-section" id="order">
+        <div class="section-heading">
+            <p class="subtitle">GOOD VALUE, MADE SIMPLE</p>
+            <h2>Packages &amp; Order Builder</h2>
+            <p>Choose a package or build your own order. Bundle prices save you money.</p>
+        </div>
+
+        <div class="package-container">
+            <article class="package-card">
+                <p class="package-label">SAVE ₦200</p>
+                <h3>Coffee Break</h3>
+                <p>1 freshly brewed coffee + 1 doughnut</p>
+                <p class="package-price"><s>₦2,400</s> ₦2,200</p>
+                <button class="package-button" type="button" data-package="coffee-break">Add package</button>
+            </article>
+            <article class="package-card">
+                <p class="package-label">SAVE ₦350</p>
+                <h3>Breakfast for Two</h3>
+                <p>2 coffees + 2 doughnuts + 1 pancake</p>
+                <p class="package-price"><s>₦5,150</s> ₦4,800</p>
+                <button class="package-button" type="button" data-package="breakfast-two">Add package</button>
+            </article>
+        </div>
+
+        <form class="order-builder" id="order-form">
+            <h3>Build your order</h3>
+            <p class="form-note">Prices are in Nigerian naira (₦). Add quantities below.</p>
+            <div class="order-items">
+                <label class="order-item"><span>Coffee <small>₦2,000 each</small></span><input type="number" min="0" step="1" value="0" data-item="coffee" aria-label="Coffee quantity"></label>
+                <label class="order-item"><span>Doughnut <small>₦400 each</small></span><input type="number" min="0" step="1" value="0" data-item="doughnut" aria-label="Doughnut quantity"></label>
+                <label class="order-item"><span>Pancakes <small>₦350 each</small></span><input type="number" min="0" step="1" value="0" data-item="pancakes" aria-label="Pancakes quantity"></label>
+                <label class="order-item"><span>Puff-Puff <small>₦150 each</small></span><input type="number" min="0" step="1" value="0" data-item="puffpuff" aria-label="Puff-Puff quantity"></label>
+            </div>
+
+            <fieldset class="fulfilment-options">
+                <legend>How would you like your order?</legend>
+                <label><input type="radio" name="fulfilment" value="pickup" checked> Pick-up (free)</label>
+                <label><input type="radio" name="fulfilment" value="delivery"> Delivery (₦1,500 sample fee)</label>
+            </fieldset>
+
+            <div class="delivery-fields" id="delivery-fields" hidden>
+                <label>Delivery address<input type="text" id="delivery-address" autocomplete="street-address" placeholder="Street, area, city"></label>
+                <label>Phone number<input type="tel" id="customer-phone" autocomplete="tel" placeholder="e.g. 08012345678"></label>
+            </div>
+
+            <div class="order-totals" aria-live="polite">
+                <p>Items subtotal <strong id="items-total">₦0</strong></p>
+                <p>Package savings <strong id="savings-total">−₦0</strong></p>
+                <p>Pick-up total <strong id="pickup-total">₦0</strong></p>
+                <p>Delivery total <strong id="delivery-total">₦1,500</strong></p>
+            </div>
+            <button class="main-button download-button" type="button" id="download-order">Review &amp; download order</button>
+            <p class="form-note">Your phone or browser will ask you to confirm before the order summary downloads.</p>
+        </form>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <p class="subtitle">LET'S CONNECT</p>
+        <h2>We're just a call away</h2>
+        <p>You want your craving satisfied? We're here for you.</p>
+        <a href="https://wa.me/2349023709091" class="main-button">
+          Order on WhatsApp
+        </a>
+        </section>
+
+        <!--Footer-->
+        <footer>
+            <h2> Brew<span>&</span>Bites.</h2>
+            <p>Good Coffee. Great Bites. Better Days.</p>
+            <p class="copyright">&copy; 2026 Brew &amp; Bites. All rights reserved.</p>
+        </footer>
+        <script src="Brew&Bites.js"></script>
+</body>
+</html>
