@@ -25,6 +25,11 @@
                     <li><a href="#menu">Our Menu</a></li>
                     <li><a href="#order">Order Builder</a></li>
                     <li><a href="#contact">Contact Us</a></li>
+                    <li class="account-nav-item">
+                        <button class="account-button" id="account-button" type="button">Sign in / Join</button>
+                        <span class="account-greeting" id="account-greeting" hidden></span>
+                        <button class="account-signout" id="account-signout" type="button" hidden>Sign out</button>
+                    </li>
                 </ul>
                 <a href="#menu" class="nav-button">Order Now</a>
             </div>
@@ -147,6 +152,7 @@
                 <label>Your name<input type="text" id="customer-name" autocomplete="name" maxlength="100" required placeholder="Name for this order"></label>
                 <label>Phone number<input type="tel" id="customer-phone" autocomplete="tel" maxlength="30" required placeholder="e.g. 08012345678"></label>
             </div>
+            <p class="form-note">Sign in or create a free account before placing an order.</p>
             <div class="delivery-fields" id="delivery-fields" hidden>
                 <label>Delivery area
                     <select id="delivery-area">
@@ -192,6 +198,49 @@
             <p>Good Coffee. Great Bites. Better Days.</p>
             <p class="copyright">&copy; 2026 Brew &amp; Bites. All rights reserved.</p>
         </footer>
+        <dialog class="account-dialog" id="account-dialog" aria-labelledby="account-dialog-title">
+            <div class="account-dialog-card">
+                <button class="account-close" id="close-account-dialog" type="button" aria-label="Close account window">&times;</button>
+                <p class="subtitle">YOUR BREW &amp; BITES ACCOUNT</p>
+                <h2 id="account-dialog-title">Welcome to Brew &amp; Bites</h2>
+                <p class="account-intro">Create an account for a personal welcome and a smoother order experience.</p>
+
+                <div class="account-tabs" id="account-tabs" role="tablist" aria-label="Account options">
+                    <button class="account-tab is-active" id="sign-in-tab" type="button" role="tab" aria-selected="true">Sign in</button>
+                    <button class="account-tab" id="sign-up-tab" type="button" role="tab" aria-selected="false">Create account</button>
+                </div>
+
+                <form class="account-form" id="sign-in-form">
+                    <label>Email address<input type="email" id="sign-in-email" autocomplete="email" required></label>
+                    <label>Password<input type="password" id="sign-in-password" autocomplete="current-password" required></label>
+                    <button class="main-button account-submit" type="submit" id="sign-in-submit">Sign in</button>
+                    <button class="account-text-button" id="forgot-customer-password" type="button">Forgot password?</button>
+                </form>
+
+                <form class="account-form" id="sign-up-form" hidden>
+                    <label>Your name<input type="text" id="sign-up-name" autocomplete="name" maxlength="100" required></label>
+                    <label>Email address<input type="email" id="sign-up-email" autocomplete="email" required></label>
+                    <label>Password<input type="password" id="sign-up-password" autocomplete="new-password" minlength="8" required></label>
+                    <button class="main-button account-submit" type="submit" id="sign-up-submit">Create account</button>
+                    <p class="account-note">Your name and email personalize your greeting. Supabase securely handles your password.</p>
+                </form>
+
+                <form class="account-form" id="customer-recovery-form" hidden>
+                    <label>Email address<input type="email" id="recovery-email" autocomplete="email" required></label>
+                    <button class="main-button account-submit" type="submit" id="recovery-submit">Send reset link</button>
+                    <button class="account-text-button" id="back-to-account" type="button">Back to sign in</button>
+                </form>
+
+                <form class="account-form" id="customer-new-password-form" hidden>
+                    <label>New password<input type="password" id="customer-new-password" autocomplete="new-password" minlength="8" required></label>
+                    <label>Confirm new password<input type="password" id="customer-confirm-password" autocomplete="new-password" minlength="8" required></label>
+                    <button class="main-button account-submit" type="submit" id="customer-save-password">Save new password</button>
+                </form>
+
+                <p class="account-status" id="account-status" role="status" aria-live="polite"></p>
+            </div>
+        </dialog>
         <script src="Brew&Bites.js"></script>
+        <script src="customer-auth.js"></script>
 </body>
 </html>

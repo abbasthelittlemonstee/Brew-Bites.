@@ -40,6 +40,7 @@ const customerName = document.getElementById("customer-name");
 const customerPhone = document.getElementById("customer-phone");
 const orderStatus = document.getElementById("order-status");
 const submitButton = document.getElementById("submit-order");
+const orderDraftKey = "brewBitesOrderDraft";
 const navbar = document.querySelector(".navbar");
 const navToggle = document.querySelector(".nav-toggle");
 
@@ -109,6 +110,37 @@ function setDeliveryVisibility() {
     deliveryAddress.required = deliverySelected;
 }
 
+function saveOrderDraft() {
+    const draft = {
+        items: quantities(),
+        packages: { ...packageCounts },
+        fulfilment: document.querySelector('input[name="fulfilment"]:checked').value,
+        deliveryArea: deliveryArea.value
+    };
+    sessionStorage.setItem(orderDraftKey, JSON.stringify(draft));
+}
+
+function restoreOrderDraft() {
+    try {
+        const draft = JSON.parse(sessionStorage.getItem(orderDraftKey) || "null");
+        if (!draft) return;
+        quantityInputs.forEach((input) => {
+            const value = draft.items?.[input.dataset.item];
+            if (Number.isInteger(value) && value >= 0) input.value = String(value);
+        });
+        Object.keys(packageCounts).forEach((name) => {
+            const value = draft.packages?.[name];
+            if (Number.isInteger(value) && value >= 0) packageCounts[name] = value;
+        });
+        if (["pickup", "delivery"].includes(draft.fulfilment)) {
+            document.querySelector(`input[name="fulfilment"][value="${draft.fulfilment}"]`).checked = true;
+        }
+        if (Object.hasOwn(deliveryFees, draft.deliveryArea)) deliveryArea.value = draft.deliveryArea;
+    } catch {
+        sessionStorage.removeItem(orderDraftKey);
+    }
+}
+
 function orderLines(serverTotals = totals()) {
     const lines = ["BREW & BITES ORDER", "=================="];
     Object.entries(serverTotals.amount || serverTotals.items).forEach(([item, quantity]) => {
@@ -158,11 +190,22 @@ function showWhatsAppFallback(lines) {
     orderStatus.append(document.createTextNode("Automatic WhatsApp alert isn’t configured yet. "), link);
 }
 
-quantityInputs.forEach((input) => input.addEventListener("input", updateTotals));
+quantityInputs.forEach((input) => input.addEventListener("input", () => {
+    updateTotals();
+    saveOrderDraft();
+}));
 document.querySelectorAll('input[name="fulfilment"]').forEach((input) => {
-    input.addEventListener("change", setDeliveryVisibility);
+    input.addEventListener("change", () => {
+        setDeliveryVisibility();
+        saveOrderDraft();
+    });
 });
-deliveryArea.addEventListener("change", updateTotals);
+deliveryArea.addEventListener("change", () => {
+    updateTotals();
+    saveOrderDraft();
+});
+customerName.addEventListener("input", saveOrderDraft);
+customerPhone.addEventListener("input", saveOrderDraft);
 
 document.querySelectorAll("[data-package]").forEach((button) => {
     button.addEventListener("click", () => {
@@ -176,6 +219,7 @@ document.querySelectorAll("[data-package]").forEach((button) => {
         });
         packageCounts[name] += 1;
         updateTotals();
+        saveOrderDraft();
         orderForm.scrollIntoView({ behavior: "smooth", block: "center" });
     });
 });
@@ -203,9 +247,16 @@ orderForm.addEventListener("submit", async (event) => {
     submitButton.disabled = true;
 
     try {
+        const customerAccessToken = await window.brewBitesCustomerAuth?.getAccessToken();
+        if (!customerAccessToken) {
+            throw new Error("Please sign in or create an account before placing your order.");
+        }
         const response = await fetch("/.netlify/functions/orders", {
             method: "POST",
-            headers: { "content-type": "application/json" },
+            headers: {
+                "content-type": "application/json",
+                authorization: `Bearer ${customerAccessToken}`
+            },
             body: JSON.stringify({
                 customerName: customerName.value.trim(),
                 customerPhone: customerPhone.value.trim(),
@@ -220,6 +271,8 @@ orderForm.addEventListener("submit", async (event) => {
         });
         const result = await response.json();
         if (!response.ok || !result.ok) throw new Error(result.error || "We couldn’t submit your order.");
+
+        sessionStorage.removeItem(orderDraftKey);
 
         const verifiedTotals = {
             amount: current.amount,
@@ -241,10 +294,14 @@ orderForm.addEventListener("submit", async (event) => {
         }
     } catch (error) {
         orderStatus.textContent = error.message || "Something went wrong. Please try again.";
+        if (/sign in|session has expired/i.test(orderStatus.textContent)) {
+            window.brewBitesCustomerAuth?.openAccount("signin");
+        }
     } finally {
         submitButton.disabled = false;
     }
 });
 
+restoreOrderDraft();
 setDeliveryVisibility();
 updateTotals();

@@ -117,6 +117,28 @@ export default async function handler(request) {
     // Quietly accept bot-trap submissions without storing them.
     if (cleanText(payload.website, 200)) return reply(201, { ok: true });
 
+    const supabaseUrl = process.env.SUPABASE_URL?.replace(/\/$/, "");
+    const supabasePublishableKey = process.env.SUPABASE_PUBLISHABLE_KEY || process.env.SUPABASE_ANON_KEY;
+    const supabaseKey = process.env.SUPABASE_SECRET_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
+    if (!supabaseUrl || !supabasePublishableKey || !supabaseKey) {
+        return reply(503, { error: "Customer accounts and order storage are not configured yet. Please try again later." });
+    }
+
+    const authorization = request.headers.get("authorization") || "";
+    const tokenMatch = authorization.match(/^Bearer\s+([^\s]+)$/i);
+    if (!tokenMatch) return reply(401, { error: "Create an account or sign in before placing an order." });
+    try {
+        const userResponse = await fetch(`${supabaseUrl}/auth/v1/user`, {
+            headers: {
+                apikey: supabasePublishableKey,
+                authorization: `Bearer ${tokenMatch[1]}`
+            }
+        });
+        if (!userResponse.ok) return reply(401, { error: "Your session has expired. Sign in again to place your order." });
+    } catch {
+        return reply(502, { error: "We couldn’t verify your account. Please try again." });
+    }
+
     const customerName = cleanText(payload.customerName, 100);
     const customerPhone = cleanText(payload.customerPhone, 30);
     const consent = payload.consent === true;
@@ -185,12 +207,6 @@ export default async function handler(request) {
         total,
         whatsapp_status: "pending"
     };
-
-    const supabaseUrl = process.env.SUPABASE_URL?.replace(/\/$/, "");
-    const supabaseKey = process.env.SUPABASE_SECRET_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
-    if (!supabaseUrl || !supabaseKey) {
-        return reply(503, { error: "Order storage is not configured yet. Please try again later." });
-    }
 
     let storedOrder;
     const apiHeaders = {
