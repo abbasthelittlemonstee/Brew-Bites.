@@ -26,6 +26,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: clamp(20px, 4vw, 60px);
     min-height: 96px;
     padding: 12px 8%;
     background-color: #faf6ef;
@@ -46,14 +47,22 @@ header {
 
 .nav-links {
     display: flex;
+    align-items: center;
     list-style: none;
-    gap: 30px;
+    gap: clamp(16px, 2vw, 30px);
+}
+
+.nav-links li {
+    display: flex;
+    align-items: center;
 }
 
 .nav-menu {
     display: flex;
+    flex: 1;
     align-items: center;
-    gap: 30px;
+    justify-content: flex-end;
+    gap: clamp(18px, 2vw, 30px);
 }
 
 .nav-toggle {
@@ -76,10 +85,15 @@ header {
     transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
-.nav-links a{
+.nav-links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 42px;
+    line-height: 1.2;
     text-decoration: none;
     color: #3b2418;
     font-size: 14px;
+    white-space: nowrap;
     transition: color 0.3s ease;
 }
 
@@ -88,12 +102,18 @@ header {
 }
 
 .nav-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
     padding: 12px 22px;
     background-color: #4b2e20;
     color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
     transition: background-color 0.3s ease;
 }
 
@@ -101,6 +121,7 @@ header {
     display: flex;
     align-items: center;
     gap: 12px;
+    white-space: nowrap;
 }
 
 .account-button,
@@ -723,6 +744,7 @@ footer span {
 
     .nav-menu {
         display: none;
+        flex: initial;
         position: absolute;
         top: 100%;
         left: 0;
@@ -742,8 +764,13 @@ footer span {
 
     .nav-links {
         flex-direction: column;
+        align-items: stretch;
         gap: 0;
         margin: 0;
+    }
+
+    .nav-links li {
+        display: block;
     }
 
     .nav-links a {
@@ -763,6 +790,7 @@ footer span {
     }
 
     .nav-button {
+        width: 100%;
         text-align: center;
     }
 
