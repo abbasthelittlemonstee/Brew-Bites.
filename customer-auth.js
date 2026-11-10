@@ -115,6 +115,13 @@
         });
         const data = await response.json().catch(() => ({}));
         if (!response.ok) {
+            const errorCode = data.error_code || data.code;
+            if (errorCode === "email_address_not_authorized") {
+                throw new Error("Email delivery is limited to project team addresses right now. Customer confirmation emails need a custom email provider configured.");
+            }
+            if (errorCode === "over_email_send_rate_limit") {
+                throw new Error("The confirmation email limit has been reached. Please wait a little and try again.");
+            }
             throw new Error(data.msg || data.message || data.error_description || "The account request could not be completed.");
         }
         return data;
@@ -239,7 +246,7 @@
                 setStatus(`Welcome, ${displayName(user)}! Your account is ready.`);
                 window.setTimeout(() => dialog.close(), 1800);
             } else {
-                setStatus("Check your email for a confirmation link. Once you confirm, you’ll return here signed in.");
+                setStatus("Request received. Check your inbox and Spam folder. If you’ve signed up before, use Sign in or Forgot password. If a new account gets no email, customer confirmation delivery still needs to be enabled.");
             }
         } catch (error) {
             setStatus(error.message, true);
