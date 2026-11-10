@@ -212,7 +212,12 @@
 
                 <form class="account-form" id="sign-in-form">
                     <label>Email address<input type="email" id="sign-in-email" autocomplete="email" required></label>
-                    <label>Password<input type="password" id="sign-in-password" autocomplete="current-password" required></label>
+                    <label>Password
+                        <span class="password-input-wrap">
+                            <input type="password" id="sign-in-password" autocomplete="current-password" required>
+                            <button class="password-toggle" type="button" data-password-toggle="sign-in-password" aria-label="Show password" aria-pressed="false">Show</button>
+                        </span>
+                    </label>
                     <button class="main-button account-submit" type="submit" id="sign-in-submit">Sign in</button>
                     <button class="account-text-button" id="forgot-customer-password" type="button">Forgot password?</button>
                 </form>
@@ -220,7 +225,12 @@
                 <form class="account-form" id="sign-up-form" hidden>
                     <label>Your name<input type="text" id="sign-up-name" autocomplete="name" maxlength="100" required></label>
                     <label>Email address<input type="email" id="sign-up-email" autocomplete="email" required></label>
-                    <label>Password<input type="password" id="sign-up-password" autocomplete="new-password" minlength="8" required></label>
+                    <label>Password
+                        <span class="password-input-wrap">
+                            <input type="password" id="sign-up-password" autocomplete="new-password" minlength="8" required>
+                            <button class="password-toggle" type="button" data-password-toggle="sign-up-password" aria-label="Show password" aria-pressed="false">Show</button>
+                        </span>
+                    </label>
                     <button class="main-button account-submit" type="submit" id="sign-up-submit">Create account</button>
                     <p class="account-note">Your name and email personalize your greeting. Supabase securely handles your password.</p>
                 </form>
@@ -232,8 +242,18 @@
                 </form>
 
                 <form class="account-form" id="customer-new-password-form" hidden>
-                    <label>New password<input type="password" id="customer-new-password" autocomplete="new-password" minlength="8" required></label>
-                    <label>Confirm new password<input type="password" id="customer-confirm-password" autocomplete="new-password" minlength="8" required></label>
+                    <label>New password
+                        <span class="password-input-wrap">
+                            <input type="password" id="customer-new-password" autocomplete="new-password" minlength="8" required>
+                            <button class="password-toggle" type="button" data-password-toggle="customer-new-password" aria-label="Show password" aria-pressed="false">Show</button>
+                        </span>
+                    </label>
+                    <label>Confirm new password
+                        <span class="password-input-wrap">
+                            <input type="password" id="customer-confirm-password" autocomplete="new-password" minlength="8" required>
+                            <button class="password-toggle" type="button" data-password-toggle="customer-confirm-password" aria-label="Show password" aria-pressed="false">Show</button>
+                        </span>
+                    </label>
                     <button class="main-button account-submit" type="submit" id="customer-save-password">Save new password</button>
                 </form>
 

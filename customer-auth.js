@@ -218,6 +218,17 @@
     document.getElementById("sign-in-tab").addEventListener("click", () => showForm(signInForm));
     document.getElementById("sign-up-tab").addEventListener("click", () => showForm(signUpForm));
 
+    document.querySelectorAll("[data-password-toggle]").forEach((toggle) => {
+        toggle.addEventListener("click", () => {
+            const passwordInput = document.getElementById(toggle.dataset.passwordToggle);
+            const showPassword = passwordInput.type === "password";
+            passwordInput.type = showPassword ? "text" : "password";
+            toggle.textContent = showPassword ? "Hide" : "Show";
+            toggle.setAttribute("aria-label", `${showPassword ? "Hide" : "Show"} password`);
+            toggle.setAttribute("aria-pressed", String(showPassword));
+        });
+    });
+
     document.getElementById("forgot-customer-password").addEventListener("click", () => {
         document.getElementById("recovery-email").value = document.getElementById("sign-in-email").value.trim();
         showForm(recoveryForm);
