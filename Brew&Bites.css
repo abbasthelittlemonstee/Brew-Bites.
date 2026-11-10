@@ -181,7 +181,7 @@ header {
     flex: 1;
 }
 
-.about-content h2 {
+.about-content h3 {
     font-size: 38px;
     margin-bottom: 20px;
 }
@@ -626,7 +626,7 @@ footer span {
         padding: 60px 6%;
     }
 
-    .about-content h2 {
+    .about-content h3 {
         font-size: 30px;
     }
 
