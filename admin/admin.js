@@ -28,6 +28,12 @@ const money = new Intl.NumberFormat("en-NG", {
 });
 const loginPanel = document.getElementById("login-panel");
 const loginForm = document.getElementById("login-form");
+const resetPanel = document.getElementById("password-reset-panel");
+const resetForm = document.getElementById("password-reset-form");
+const resetMessage = document.getElementById("reset-message");
+const newPasswordPanel = document.getElementById("new-password-panel");
+const newPasswordForm = document.getElementById("new-password-form");
+const newPasswordMessage = document.getElementById("new-password-message");
 const ordersPanel = document.getElementById("orders-panel");
 const loginMessage = document.getElementById("login-message");
 const ordersMessage = document.getElementById("orders-message");
@@ -35,6 +41,17 @@ const ordersBody = document.getElementById("orders-body");
 const emptyState = document.getElementById("empty-state");
 let config;
 let accessToken = sessionStorage.getItem("brewBitesAdminToken");
+let recoveryAccessToken = null;
+
+function showOnly(panel) {
+    for (const candidate of [loginPanel, resetPanel, newPasswordPanel, ordersPanel]) {
+        candidate.hidden = candidate !== panel;
+    }
+}
+
+function clearRecoveryFragment() {
+    window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}`);
+}
 
 function setMessage(element, message, isError = false) {
     element.textContent = message;
@@ -174,18 +191,96 @@ async function updateStatus(orderId, select) {
 }
 
 async function showOrders() {
-    loginPanel.hidden = true;
-    ordersPanel.hidden = false;
+    showOnly(ordersPanel);
     await loadOrders();
 }
 
 function signOut(showNotice = true) {
     accessToken = null;
     sessionStorage.removeItem("brewBitesAdminToken");
-    ordersPanel.hidden = true;
-    loginPanel.hidden = false;
+    showOnly(loginPanel);
     if (showNotice) setMessage(loginMessage, "You have signed out.");
 }
+
+document.getElementById("forgot-password").addEventListener("click", () => {
+    document.getElementById("reset-email").value = document.getElementById("admin-email").value.trim();
+    setMessage(resetMessage, "");
+    showOnly(resetPanel);
+});
+
+document.getElementById("back-to-login").addEventListener("click", () => {
+    setMessage(loginMessage, "");
+    showOnly(loginPanel);
+});
+
+resetForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const button = document.getElementById("reset-email-button");
+    button.disabled = true;
+    setMessage(resetMessage, "Sending reset link…");
+
+    try {
+        if (!config) throw new Error("Admin settings are unavailable. Reload this page and try again.");
+        const redirectTo = `${window.location.origin}/admin/`;
+        const response = await fetch(`${config.url}/auth/v1/recover?redirect_to=${encodeURIComponent(redirectTo)}`, {
+            method: "POST",
+            headers: {
+                apikey: config.publishableKey,
+                "content-type": "application/json"
+            },
+            body: JSON.stringify({ email: document.getElementById("reset-email").value.trim() })
+        });
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(result.msg || result.message || "Could not send the reset link. Check the Supabase redirect URL settings.");
+        setMessage(resetMessage, "If this email belongs to an account, a reset link has been sent. Check your inbox and spam folder.");
+    } catch (error) {
+        setMessage(resetMessage, error.message, true);
+    } finally {
+        button.disabled = false;
+    }
+});
+
+newPasswordForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const button = document.getElementById("save-password-button");
+    const password = document.getElementById("new-password").value;
+    const confirmation = document.getElementById("confirm-password").value;
+    if (password !== confirmation) {
+        setMessage(newPasswordMessage, "The passwords do not match.", true);
+        return;
+    }
+    if (!recoveryAccessToken || !config) {
+        setMessage(newPasswordMessage, "This reset link is invalid or has expired. Request a new one.", true);
+        return;
+    }
+
+    button.disabled = true;
+    setMessage(newPasswordMessage, "Saving your new password…");
+    try {
+        const response = await fetch(`${config.url}/auth/v1/user`, {
+            method: "PUT",
+            headers: {
+                apikey: config.publishableKey,
+                authorization: `Bearer ${recoveryAccessToken}`,
+                "content-type": "application/json"
+            },
+            body: JSON.stringify({ password })
+        });
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(result.msg || result.message || "Could not update the password. Request a fresh reset link and try again.");
+
+        recoveryAccessToken = null;
+        clearRecoveryFragment();
+        newPasswordForm.reset();
+        document.getElementById("admin-password").value = "";
+        setMessage(loginMessage, "Password updated. Sign in with your new password.");
+        showOnly(loginPanel);
+    } catch (error) {
+        setMessage(newPasswordMessage, error.message, true);
+    } finally {
+        button.disabled = false;
+    }
+});
 
 loginForm.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -225,10 +320,21 @@ document.getElementById("sign-out").addEventListener("click", () => signOut());
 
 (async function initializeAdmin() {
     try {
+        const recoveryParams = new URLSearchParams(window.location.hash.slice(1));
+        const recoveryType = recoveryParams.get("type");
+        recoveryAccessToken = recoveryType === "recovery" ? recoveryParams.get("access_token") : null;
+        if (recoveryAccessToken) clearRecoveryFragment();
+
         const response = await fetch("/.netlify/functions/admin-config", { cache: "no-store" });
         config = await response.json();
         if (!response.ok) throw new Error(config.error || "Admin login is not configured yet.");
-        if (accessToken) await showOrders();
+        if (recoveryAccessToken) {
+            accessToken = null;
+            sessionStorage.removeItem("brewBitesAdminToken");
+            showOnly(newPasswordPanel);
+        } else if (accessToken) {
+            await showOrders();
+        }
     } catch (error) {
         setMessage(loginMessage, error.message, true);
     }

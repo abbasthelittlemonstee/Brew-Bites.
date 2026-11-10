@@ -23,7 +23,32 @@
                 <label>Password<input type="password" id="admin-password" autocomplete="current-password" required></label>
                 <button type="submit" class="primary-button" id="login-button">Sign in</button>
             </form>
+            <button type="button" class="text-button" id="forgot-password">Forgot password?</button>
             <p class="notice" id="login-message" role="status" aria-live="polite"></p>
+        </section>
+
+        <section class="login-panel" id="password-reset-panel" aria-labelledby="reset-title" hidden>
+            <p class="eyebrow">STAFF ACCESS</p>
+            <h1 id="reset-title">Reset your password</h1>
+            <p class="muted">Enter your admin email and we’ll send a secure password reset link.</p>
+            <form id="password-reset-form">
+                <label>Email address<input type="email" id="reset-email" autocomplete="email" required></label>
+                <button type="submit" class="primary-button" id="reset-email-button">Send reset link</button>
+            </form>
+            <button type="button" class="text-button" id="back-to-login">Back to sign in</button>
+            <p class="notice" id="reset-message" role="status" aria-live="polite"></p>
+        </section>
+
+        <section class="login-panel" id="new-password-panel" aria-labelledby="new-password-title" hidden>
+            <p class="eyebrow">STAFF ACCESS</p>
+            <h1 id="new-password-title">Choose a new password</h1>
+            <p class="muted">Use at least 8 characters for your new password.</p>
+            <form id="new-password-form">
+                <label>New password<input type="password" id="new-password" autocomplete="new-password" minlength="8" required></label>
+                <label>Confirm new password<input type="password" id="confirm-password" autocomplete="new-password" minlength="8" required></label>
+                <button type="submit" class="primary-button" id="save-password-button">Save new password</button>
+            </form>
+            <p class="notice" id="new-password-message" role="status" aria-live="polite"></p>
         </section>
 
         <section class="orders-panel" id="orders-panel" hidden>

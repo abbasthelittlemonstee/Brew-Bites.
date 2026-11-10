@@ -42,6 +42,7 @@ button { min-height: 42px; padding: 9px 15px; border-radius: 6px; cursor: pointe
 button:disabled { cursor: wait; opacity: .6; }
 .primary-button { border: 0; background: #4b2e20; color: #fff; font-weight: 700; }
 .secondary-button { border: 1px solid #d7c8ba; background: #fff; color: #4b2e20; }
+.text-button { min-height: auto; padding: 0; border: 0; background: transparent; color: #7a4b2f; text-align: left; text-decoration: underline; }
 .notice { min-height: 1.5em; color: #4b2e20; line-height: 1.5; }
 .notice.error { color: #a22f24; }
 .panel-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; margin-bottom: 18px; }
