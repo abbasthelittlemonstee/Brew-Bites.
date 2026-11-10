@@ -15,15 +15,19 @@
             <a class="logo" href="#home" aria-label="Brew &amp; Bites home">
                 <img src="Brew&Bites Logo.png" alt="Brew &amp; Bites">
             </a>
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About Us</a></li>
-                <li><a href="#menu">Our Menu</a></li>
-                <li><a href="#order">Order Builder</a></li>
-                <li><a href="#contact">Contact Us</a></li>
-            </ul>
-
-        <a href="#menu" class="nav-button">Order Now</a>
+            <button class="nav-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="primary-navigation">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="nav-menu" id="primary-navigation">
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#menu">Our Menu</a></li>
+                    <li><a href="#order">Order Builder</a></li>
+                    <li><a href="#contact">Contact Us</a></li>
+                </ul>
+                <a href="#menu" class="nav-button">Order Now</a>
+            </div>
         </nav>
      </header>
 
@@ -187,7 +191,6 @@
             <h2> Brew<span>&</span>Bites.</h2>
             <p>Good Coffee. Great Bites. Better Days.</p>
             <p class="copyright">&copy; 2026 Brew &amp; Bites. All rights reserved.</p>
-            <a class="staff-link" href="/admin/">Staff admin</a>
         </footer>
         <script src="Brew&Bites.js"></script>
 </body>

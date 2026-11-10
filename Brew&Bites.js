@@ -40,6 +40,28 @@ const customerName = document.getElementById("customer-name");
 const customerPhone = document.getElementById("customer-phone");
 const orderStatus = document.getElementById("order-status");
 const submitButton = document.getElementById("submit-order");
+const navbar = document.querySelector(".navbar");
+const navToggle = document.querySelector(".nav-toggle");
+
+function closeNavigation() {
+    navbar.classList.remove("nav-open");
+    navToggle.setAttribute("aria-expanded", "false");
+    navToggle.setAttribute("aria-label", "Open navigation menu");
+}
+
+navToggle.addEventListener("click", () => {
+    const isOpen = navbar.classList.toggle("nav-open");
+    navToggle.setAttribute("aria-expanded", String(isOpen));
+    navToggle.setAttribute("aria-label", isOpen ? "Close navigation menu" : "Open navigation menu");
+});
+
+document.querySelectorAll(".nav-menu a").forEach((link) => {
+    link.addEventListener("click", closeNavigation);
+});
+
+document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") closeNavigation();
+});
 
 function quantities() {
     return Object.fromEntries(Array.from(quantityInputs, (input) => [

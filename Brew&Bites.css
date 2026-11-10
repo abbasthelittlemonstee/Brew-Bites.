@@ -10,14 +10,24 @@ body {
       font-family: Arial, Helvetica, sans-serif;
       background-color: #faf6ef;
       color: #3b2418;
+      padding-top: 96px;
 }
 
 /*Navigation Bar Styling*/
+header {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 1000;
+    background-color: #faf6ef;
+    box-shadow: 0 4px 16px rgba(59, 36, 24, 0.1);
+}
+
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 25px 8%;
+    min-height: 96px;
+    padding: 12px 8%;
     background-color: #faf6ef;
 }
 
@@ -38,6 +48,32 @@ body {
     display: flex;
     list-style: none;
     gap: 30px;
+}
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.nav-toggle {
+    display: none;
+    width: 44px;
+    height: 44px;
+    padding: 10px;
+    border: 1px solid #d9c9b7;
+    border-radius: 8px;
+    background: transparent;
+    cursor: pointer;
+}
+
+.nav-toggle span {
+    display: block;
+    height: 2px;
+    margin: 5px 0;
+    border-radius: 2px;
+    background: #3b2418;
+    transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 .nav-links a{
@@ -504,16 +540,70 @@ footer span {
 /* Mobile Responsivess */
 @media (max-width: 768px) {
     .navbar {
+        min-height: 82px;
+        padding: 8px 6%;
+        position: relative;
+    }
+
+    body {
+        padding-top: 82px;
+    }
+
+    .logo img {
+        width: 62px;
+        height: 62px;
+    }
+
+    .nav-toggle {
+        display: block;
+        margin-left: auto;
+    }
+
+    .nav-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        padding: 18px 6% 22px;
+        background: #faf6ef;
+        border-top: 1px solid #e5d8c9;
+        box-shadow: 0 10px 16px rgba(59, 36, 24, 0.1);
+        align-items: stretch;
+        gap: 18px;
+    }
+
+    .navbar.nav-open .nav-menu {
+        display: flex;
         flex-direction: column;
-        gap: 20px;
-        align-items: flex-start;
     }
 
     .nav-links {
-        flex-wrap: wrap;
-        gap: 15px;
-        margin-top: 15px;
-        justify-content: center;
+        flex-direction: column;
+        gap: 0;
+        margin: 0;
+    }
+
+    .nav-links a {
+        display: block;
+        padding: 12px 0;
+        font-size: 16px;
+    }
+
+    .nav-button {
+        text-align: center;
+    }
+
+    .navbar.nav-open .nav-toggle span:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+    }
+
+    .navbar.nav-open .nav-toggle span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .navbar.nav-open .nav-toggle span:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
     }
 
     .hero {
