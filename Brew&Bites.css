@@ -341,6 +341,60 @@ body {
     margin: 10px 0;
 }
 
+.customer-fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin: 16px 0;
+}
+
+.customer-fields label {
+    display: block;
+    font-weight: bold;
+}
+
+.customer-fields input {
+    display: block;
+    width: 100%;
+    margin-top: 6px;
+    padding: 12px;
+    border: 1px solid #d7c8ba;
+    border-radius: 5px;
+}
+
+.order-consent {
+    display: block;
+    margin: 18px 0;
+    color: #756357;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.order-consent input {
+    margin-right: 6px;
+}
+
+.bot-trap {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+.order-status {
+    margin-top: 16px;
+    color: #4b2e20;
+    line-height: 1.6;
+}
+
+.whatsapp-fallback {
+    display: inline-block;
+    margin-top: 8px;
+    color: #147a3d;
+    font-weight: bold;
+}
+
 .delivery-fields label {
     display: block;
     font-weight: bold;
@@ -354,6 +408,17 @@ body {
     padding: 12px;
     border: 1px solid #d7c8ba;
     border-radius: 5px;
+}
+
+.delivery-fields select {
+    display: block;
+    width: 100%;
+    margin-top: 6px;
+    padding: 12px;
+    border: 1px solid #d7c8ba;
+    border-radius: 5px;
+    background: #fff;
+    color: #3b2418;
 }
 
 .order-totals {
@@ -431,6 +496,11 @@ footer span {
     margin-top: 25px;
 }
 
+.staff-link {
+    color: #c9b9ae;
+    font-size: 12px;
+}
+
 /* Mobile Responsivess */
 @media (max-width: 768px) {
     .navbar {
@@ -475,7 +545,8 @@ footer span {
     }
 
     .package-container,
-    .order-items {
+    .order-items,
+    .customer-fields {
         grid-template-columns: 1fr;
     }
 

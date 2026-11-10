@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Order Admin | Brew &amp; Bites</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <header class="admin-header">
+        <a href="/" class="brand">Brew <span>&amp;</span> Bites</a>
+        <span class="header-label">Order management</span>
+    </header>
+
+    <main class="admin-main">
+        <section class="login-panel" id="login-panel" aria-labelledby="login-title">
+            <p class="eyebrow">STAFF ACCESS</p>
+            <h1 id="login-title">Sign in to manage orders</h1>
+            <p class="muted">Only the authorized Brew &amp; Bites admin account can view customer orders.</p>
+            <form id="login-form">
+                <label>Email address<input type="email" id="admin-email" autocomplete="username" required></label>
+                <label>Password<input type="password" id="admin-password" autocomplete="current-password" required></label>
+                <button type="submit" class="primary-button" id="login-button">Sign in</button>
+            </form>
+            <p class="notice" id="login-message" role="status" aria-live="polite"></p>
+        </section>
+
+        <section class="orders-panel" id="orders-panel" hidden>
+            <div class="panel-heading">
+                <div>
+                    <p class="eyebrow">BREW &amp; BITES</p>
+                    <h1>Customer orders</h1>
+                    <p class="muted">Showing the latest 100 orders.</p>
+                </div>
+                <div class="panel-actions">
+                    <button type="button" class="secondary-button" id="refresh-orders">Refresh</button>
+                    <button type="button" class="secondary-button" id="sign-out">Sign out</button>
+                </div>
+            </div>
+            <p class="notice" id="orders-message" role="status" aria-live="polite"></p>
+            <div class="table-scroll">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Order</th>
+                            <th>Customer</th>
+                            <th>Items</th>
+                            <th>Fulfilment</th>
+                            <th>Total</th>
+                            <th>Order status</th>
+                            <th>WhatsApp alert</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orders-body"></tbody>
+                </table>
+            </div>
+            <p class="empty-state" id="empty-state" hidden>No orders yet.</p>
+        </section>
+    </main>
+
+    <script src="admin.js"></script>
+</body>
+</html>

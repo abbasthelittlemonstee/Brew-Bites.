@@ -91,7 +91,7 @@
             <img src="https://i.pinimg.com/1200x/b7/78/c4/b778c4406c32c55154d35bc5a3b492a5.jpg"
             alt="Puff-Puff">
             <h3>Puff-Puff</h3>
-            <p>Creamy and Different from anything you've tried</p>
+            <p>Creamy and Different from anything you've ever tried.</p>
             <span>&#8358;150</span>
         </div>
         </div>
@@ -125,6 +125,7 @@
         <form class="order-builder" id="order-form">
             <h3>Build your order</h3>
             <p class="form-note">Prices are in Nigerian naira (₦). Add quantities below.</p>
+            <label class="bot-trap" aria-hidden="true">Leave this field empty<input type="text" id="website" tabindex="-1" autocomplete="off"></label>
             <div class="order-items">
                 <label class="order-item"><span>Coffee <small>₦2,000 each</small></span><input type="number" min="0" step="1" value="0" data-item="coffee" aria-label="Coffee quantity"></label>
                 <label class="order-item"><span>Doughnut <small>₦400 each</small></span><input type="number" min="0" step="1" value="0" data-item="doughnut" aria-label="Doughnut quantity"></label>
@@ -135,22 +136,39 @@
             <fieldset class="fulfilment-options">
                 <legend>How would you like your order?</legend>
                 <label><input type="radio" name="fulfilment" value="pickup" checked> Pick-up (free)</label>
-                <label><input type="radio" name="fulfilment" value="delivery"> Delivery (₦1,500 sample fee)</label>
+                <label><input type="radio" name="fulfilment" value="delivery"> Delivery (fee depends on area)</label>
             </fieldset>
 
-            <div class="delivery-fields" id="delivery-fields" hidden>
-                <label>Delivery address<input type="text" id="delivery-address" autocomplete="street-address" placeholder="Street, area, city"></label>
-                <label>Phone number<input type="tel" id="customer-phone" autocomplete="tel" placeholder="e.g. 08012345678"></label>
+            <div class="customer-fields">
+                <label>Your name<input type="text" id="customer-name" autocomplete="name" maxlength="100" required placeholder="Name for this order"></label>
+                <label>Phone number<input type="tel" id="customer-phone" autocomplete="tel" maxlength="30" required placeholder="e.g. 08012345678"></label>
             </div>
+            <div class="delivery-fields" id="delivery-fields" hidden>
+                <label>Delivery area
+                    <select id="delivery-area">
+                        <option value="" selected>Select your area</option>
+                        <option value="academic_area">Academic area — ₦600</option>
+                        <option value="halls_of_residence">Halls of residence — ₦500</option>
+                        <option value="private_hostel">Private hostel — ₦300</option>
+                        <option value="off_campus" disabled>Off-campus — unavailable</option>
+                    </select>
+                </label>
+                <p class="form-note">Off-campus delivery is currently unavailable.</p>
+                <label>Delivery address<input type="text" id="delivery-address" autocomplete="street-address" placeholder="Street, area, city"></label>
+            </div>
+
+            <label class="order-consent"><input type="checkbox" id="order-consent" required> I agree that Brew &amp; Bites may store my name, phone number and order details (including my delivery address) and share them with service providers to process this order and contact me about it on WhatsApp.</label>
 
             <div class="order-totals" aria-live="polite">
                 <p>Items subtotal <strong id="items-total">₦0</strong></p>
                 <p>Package savings <strong id="savings-total">−₦0</strong></p>
                 <p>Pick-up total <strong id="pickup-total">₦0</strong></p>
-                <p>Delivery total <strong id="delivery-total">₦1,500</strong></p>
+                <p>Delivery fee <strong id="delivery-fee-total">Select an area</strong></p>
+                <p>Delivery total <strong id="delivery-total">Select an area</strong></p>
             </div>
-            <button class="main-button download-button" type="button" id="download-order">Review &amp; download order</button>
-            <p class="form-note">Your phone or browser will ask you to confirm before the order summary downloads.</p>
+            <button class="main-button download-button" type="submit" id="submit-order">Review &amp; submit order</button>
+            <p class="form-note">We’ll ask you to confirm before sending your order. After it’s accepted, you can download a copy.</p>
+            <p class="order-status" id="order-status" role="status" aria-live="polite"></p>
         </form>
     </section>
 
@@ -169,6 +187,7 @@
             <h2> Brew<span>&</span>Bites.</h2>
             <p>Good Coffee. Great Bites. Better Days.</p>
             <p class="copyright">&copy; 2026 Brew &amp; Bites. All rights reserved.</p>
+            <a class="staff-link" href="/admin/">Staff admin</a>
         </footer>
         <script src="Brew&Bites.js"></script>
 </body>
